@@ -1,0 +1,9 @@
+/.*
+!.gitignore
+/kubespray
+/kubespray_inventory/hosts.ini
+/kubespray_inventory/credentials-velero
+/terraform/private.auto.tfvars
+/terraform/.terraform
+/terraform/*.tfstate
+/terraform/*.tfstate.*

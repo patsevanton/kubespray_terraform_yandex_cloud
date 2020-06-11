@@ -1,0 +1,4 @@
+nodeExporter:
+  tolerations:
+  - effect: "NoSchedule"
+    operator: "Exists"

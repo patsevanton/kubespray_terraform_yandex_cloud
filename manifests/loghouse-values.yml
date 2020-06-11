@@ -1,0 +1,45 @@
+ingress:
+  enable: false
+
+storage:
+  pvc:
+    name: clickhouse
+    accessMode: ReadWriteOnce
+    size: 2Gi
+    storageClassName: local-path
+
+clickhouse:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 32Mi
+  exporter:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 32Mi
+
+fluentd:
+  tolerations:
+  - key: "node-role.kubernetes.io/master"
+    operator: "Exists"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 32Mi
+
+loghouse:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 32Mi
+  frontend:
+    requests:
+      cpu: 100m
+      memory: 32Mi
+
+tabix:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 32Mi

@@ -1,0 +1,2 @@
+node_labels:
+  node-role.kubernetes.io/worker: "true"
