@@ -7,6 +7,7 @@ TF_IN_AUTOMATION=1 terraform init
 TF_IN_AUTOMATION=1 terraform apply -auto-approve
 bash generate_inventory.sh > ../kubespray_inventory/hosts.ini
 bash generate_credentials_velero.sh > ../kubespray_inventory/credentials-velero
+bash generate_etc_hosts.sh > ../kubespray_inventory/etc-hosts
 
 cd ../
 rm -rf kubespray/inventory/mycluster

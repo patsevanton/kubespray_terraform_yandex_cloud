@@ -1,5 +1,12 @@
 ingress:
-  enable: false
+  enable: true
+  enable_https: false
+  loghouse:
+    host: loghouse.local
+    path: /
+    tls_secret_name:
+
+enable_tabix: false
 
 storage:
   pvc:
@@ -7,6 +14,8 @@ storage:
     accessMode: ReadWriteOnce
     size: 2Gi
     storageClassName: local-path
+
+retention_period: 7
 
 clickhouse:
   hasBuffer: false
@@ -37,12 +46,6 @@ loghouse:
       cpu: 100m
       memory: 32Mi
   frontend:
-    requests:
-      cpu: 100m
-      memory: 32Mi
-
-tabix:
-  resources:
     requests:
       cpu: 100m
       memory: 32Mi

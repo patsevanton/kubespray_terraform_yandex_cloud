@@ -2,3 +2,9 @@ nodeExporter:
   tolerations:
   - effect: "NoSchedule"
     operator: "Exists"
+
+server:
+  ingress:
+    enabled: true
+    hosts:
+      - prometheus.local

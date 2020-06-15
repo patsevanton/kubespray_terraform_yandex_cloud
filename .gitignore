@@ -3,6 +3,7 @@
 /kubespray
 /kubespray_inventory/hosts.ini
 /kubespray_inventory/credentials-velero
+/kubespray_inventory/etc-hosts
 /terraform/private.auto.tfvars
 /terraform/.terraform
 /terraform/*.tfstate

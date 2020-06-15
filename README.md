@@ -51,9 +51,14 @@ $ mkdir -p ~/.kube && cp kubespray/inventory/mycluster/artifacts/admin.conf ~/.k
 $ kubectl apply -f manifests/test-app.yml
 ```
 
+## Add hosts to your local hosts file
+```
+$ sudo sh -c "cat kubespray_inventory/etc-hosts >> /etc/hosts"
+```
+
 ## Check external access to test app
 ```
-$ curl hello-world.info --resolve hello-world.info:80:[load-balancer-public-ip]
+$ curl hello.local
 Hello from my-deployment-784598767c-7gjjs
 ```
 
@@ -76,24 +81,20 @@ Go to http://localhost:9090 and use token for authentication
 ```
 $ helm install --namespace monitoring --create-namespace -f manifests/prometheus-values.yml \
   prometheus stable/prometheus
-$ helm install --namespace monitoring --create-namespace grafana stable/grafana
+$ helm install --namespace monitoring --create-namespace -f manifests/grafana-values.yml \
+  grafana stable/grafana
 ```
 
 ### Access Prometheus UI
-```
-$ kubectl port-forward -n monitoring $(kubectl get pods -n monitoring \
-  -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}") 9090
-```
-Go to http://localhost:9090
+
+Go to http://prometheus.local
 
 ### Access Grafana UI
 ```
 $ kubectl get secret -n monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-$ kubectl port-forward -n monitoring $(kubectl get pods -n monitoring \
-  -l "app.kubernetes.io/name=grafana" -o jsonpath="{.items[0].metadata.name}") 3000
 ```
 
-Go to http://localhost:3000 (user: admin, password: result of first command).
+Go to http://grafana.local (user: admin, password: result of first command).
 Add new data source with type "Prometheus" and url "http://prometheus-server".
 Import a new dashboard to Grafana (grafana.com dashboard: https://grafana.com/dashboards/1621, Prometheus: created one).
 
@@ -102,12 +103,10 @@ Import a new dashboard to Grafana (grafana.com dashboard: https://grafana.com/da
 ## Deploy Loghouse
 ```
 $ helm repo add loghouse https://flant.github.io/loghouse/charts/
-$ helm install --namespace loghouse --create-namespace \
-  -f manifests/loghouse-values.yml loghouse loghouse/loghouse
-$ kubectl port-forward -n loghouse $(kubectl get pods -n loghouse -l "component=loghouse" \
-  -o jsonpath="{.items[0].metadata.name}") 4000:80
+$ helm install --namespace loghouse --create-namespace -f manifests/loghouse-values.yml \
+  loghouse loghouse/loghouse
 ```
-Go to http://localhost:4000 (login: admin, password: PASSWORD)
+Go to http://loghouse.local (login: admin, password: PASSWORD).
 
 Try to search logs of test app with the query:
 ```
