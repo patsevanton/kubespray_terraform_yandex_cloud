@@ -9,6 +9,7 @@ storage:
     storageClassName: local-path
 
 clickhouse:
+  hasBuffer: false
   resources:
     requests:
       cpu: 100m
@@ -22,6 +23,8 @@ clickhouse:
 fluentd:
   tolerations:
   - key: "node-role.kubernetes.io/master"
+    operator: "Exists"
+  - key: "node-role.kubernetes.io/ingress"
     operator: "Exists"
   resources:
     requests:

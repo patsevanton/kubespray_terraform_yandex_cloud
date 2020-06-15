@@ -1,36 +1,39 @@
 # Install k8s cluster with Kubespray on Yandex Cloud
 
-## Install YC CLI
+## Register in Yandex Cloud
 
-https://cloud.yandex.ru/docs/cli/quickstart
+https://cloud.yandex.ru
 
-You need to register account also: https://cloud.yandex.ru
-
-## Install Terraform Client 
+## Install Terraform client 
 
 https://learn.hashicorp.com/terraform/getting-started/install
-
-## Install jq (small CLI utility for JSON parsing)
-
-https://stedolan.github.io/jq/
 
 ## Install Ansible
 
 https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
-## Set Terraform variables
-```
-$ cd terraform
-$ cp private.auto.tfvars.example private.auto.tfvars
-$ vim private.auto.tfvars
-```
+## Install Kubectl
+
+https://kubernetes.io/docs/tasks/tools/install-kubectl/
+
+## Install Helm
+
+https://helm.sh/docs/intro/install/
+
+## Install jq (small CLI utility for JSON parsing)
+
+https://stedolan.github.io/jq/
 
 ## Clone Kubespray repo and install Kubespray requirements
 ```
 $ git clone git@git.cloud-team.ru:ansible-roles/kubespray.git kubespray -b cloudteam
-$ cd kubespray
-$ sudo pip3 install -r requirements.txt
-$ cd ../
+$ sudo pip3 install -r kubespray/requirements.txt
+```
+
+## Set Terraform variables
+```
+$ cp terraform/private.auto.tfvars.example terraform/private.auto.tfvars
+$ vim terraform/private.auto.tfvars
 ```
 
 ## Create cloud resources and install k8s cluster
@@ -50,7 +53,7 @@ $ kubectl apply -f manifests/test-app.yml
 
 ## Check external access to test app
 ```
-$ curl hello-world.info  --resolve hello-world.info:80:[load-balancer-public-ip]
+$ curl hello-world.info --resolve hello-world.info:80:[load-balancer-public-ip]
 Hello from my-deployment-784598767c-7gjjs
 ```
 
@@ -58,36 +61,58 @@ Hello from my-deployment-784598767c-7gjjs
 
 ## Install Kubernetes Dashboard
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.1/aio/deploy/recommended.yaml
+$ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+$ helm install --namespace monitoring --create-namespace -f manifests/dashboard-values.yml \
+  kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
 $ kubectl apply -f manifests/dashboard-admin.yml
-$ kubectl -n kubernetes-dashboard describe secret \
-  $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
-$ kubectl proxy
+$ kubectl -n monitoring describe secret \
+  $(kubectl -n monitoring get secret | grep admin-user | awk '{print $1}')
+$ kubectl port-forward -n monitoring $(kubectl get pods -n monitoring \
+  -l "app.kubernetes.io/name=kubernetes-dashboard" -o jsonpath="{.items[0].metadata.name}") 9090
 ```
-Go to http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
-and use token for authentication
+Go to http://localhost:9090 and use token for authentication
 
 ## Install Prometheus and Grafana
 ```
-$ helm install prometheus stable/prometheus -f manifests/prometheus-values.yml
-$ helm install grafana stable/grafana
+$ helm install --namespace monitoring --create-namespace -f manifests/prometheus-values.yml \
+  prometheus stable/prometheus
+$ helm install --namespace monitoring --create-namespace grafana stable/grafana
 ```
 
 ### Access Prometheus UI
 ```
-$ kubectl port-forward $(kubectl get pods -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}") 9090
+$ kubectl port-forward -n monitoring $(kubectl get pods -n monitoring \
+  -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}") 9090
 ```
 Go to http://localhost:9090
 
 ### Access Grafana UI
 ```
-$ kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-$ kubectl port-forward $(kubectl get pods -l "app.kubernetes.io/name=grafana" -o jsonpath="{.items[0].metadata.name}") 3000
+$ kubectl get secret -n monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+$ kubectl port-forward -n monitoring $(kubectl get pods -n monitoring \
+  -l "app.kubernetes.io/name=grafana" -o jsonpath="{.items[0].metadata.name}") 3000
 ```
 
 Go to http://localhost:3000 (user: admin, password: result of first command).
 Add new data source with type "Prometheus" and url "http://prometheus-server".
 Import a new dashboard to Grafana (grafana.com dashboard: https://grafana.com/dashboards/1621, Prometheus: created one).
+
+# Logging
+
+## Deploy Loghouse
+```
+$ helm repo add loghouse https://flant.github.io/loghouse/charts/
+$ helm install --namespace loghouse --create-namespace \
+  -f manifests/loghouse-values.yml loghouse loghouse/loghouse
+$ kubectl port-forward -n loghouse $(kubectl get pods -n loghouse -l "component=loghouse" \
+  -o jsonpath="{.items[0].metadata.name}") 4000:80
+```
+Go to http://localhost:4000 (login: admin, password: PASSWORD)
+
+Try to search logs of test app with the query:
+```
+~app = "my-app"
+```
 
 # Cluster backup/restore
 
@@ -98,12 +123,12 @@ https://velero.io/docs/v1.4/basic-install/
 ## Install and configure AWS plugin
 ```
 $ velero install \
-      --provider aws \
-      --plugins velero/velero-plugin-for-aws:v1.1.0 \
-      --bucket backup-backet \
-      --backup-location-config region=ru-central1-a,s3ForcePathStyle="true",s3Url=https://storage.yandexcloud.net \
-      --snapshot-location-config region=ru-central1-a \
-      --secret-file kubespray_inventory/credentials-velero
+  --provider aws \
+  --plugins velero/velero-plugin-for-aws:v1.1.0 \
+  --bucket backup-backet \
+  --backup-location-config region=ru-central1-a,s3ForcePathStyle="true",s3Url=https://storage.yandexcloud.net \
+  --snapshot-location-config region=ru-central1-a \
+  --secret-file kubespray_inventory/credentials-velero
 ```
 
 ## Create backup and watch its status
@@ -121,23 +146,6 @@ $ kubectl delete -f manifests/test-app.yml
 ```
 $ velero restore create --from-backup my-first-backup
 $ velero restore get
-```
-
-# Logging
-
-## Deploy Loghouse
-```
-$ helm repo add loghouse https://flant.github.io/loghouse/charts/
-$ helm install --namespace loghouse --create-namespace \
-  -f manifests/loghouse-values.yml loghouse loghouse/loghouse
-$ kubectl port-forward -n loghouse $(kubectl get pods -n loghouse -l "component=loghouse" \
-  -o jsonpath="{.items[0].metadata.name}") 4000:80
-```
-Go to http://localhost:4000 (login: admin, password: PASSWORD)
-
-Try to search logs of test app with the query:
-```
-~app = "my-app"
 ```
 
 # Destroy cluster
