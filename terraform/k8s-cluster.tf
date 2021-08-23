@@ -386,7 +386,7 @@ output "instance_group_ingresses_private_ips" {
 
 output "load_balancer_public_ip" {
   description = "Public IP address of load balancer"
-  value = yandex_lb_network_load_balancer.k8s-load-balancer.listener.*.external_address_spec.0.address
+  value = yandex_lb_network_load_balancer.k8s-load-balancer.listener.*.external_address_spec[0].*.address
 }
 
 output "static-key-access-key" {
