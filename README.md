@@ -124,7 +124,7 @@ https://velero.io/docs/v1.4/basic-install/
 $ velero install \
   --provider aws \
   --plugins velero/velero-plugin-for-aws:v1.1.0 \
-  --bucket backup-backet \
+  --bucket backup-backet-apatsev \
   --backup-location-config region=ru-central1-a,s3ForcePathStyle="true",s3Url=https://storage.yandexcloud.net \
   --snapshot-location-config region=ru-central1-a \
   --secret-file kubespray_inventory/credentials-velero
