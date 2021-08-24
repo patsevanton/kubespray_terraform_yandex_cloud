@@ -87,6 +87,8 @@ resource "yandex_vpc_network" "k8s-network" {
 
 Ресурс yandex_storage_bucket находится в разделе Object Storage
 
+![](https://habrastorage.org/webt/gd/kd/ss/gdkdssznvixut8dr8wgftwjej4k.png)
+
 ## Put ssh key into .ssh
 
 ## Create cloud resources and install k8s cluster
