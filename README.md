@@ -27,11 +27,10 @@ $ curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 https://cloud.yandex.ru/docs/cli/quickstart
 
 ## Установка binenv
-Binenv - утилита загрузки, установки и управления бинарными программами, которые вам нужны в повседневной жизни DevOps (например, kubectl, helm, ...).
-https://github.com/devops-works/binenv
+[Binenv](https://github.com/devops-works/binenv) - утилита загрузки, установки и управления бинарными программами, которые вам нужны в повседневной жизни DevOps (например, kubectl, helm, ...).
 
 ## Установка Terraform 
-Terraform — это инструмент для создания декларативного кода, который позволяет разработчикам использовать язык высокого уровня, называемый HCL (HashiCorp Configuration Language) для описания нужной облачной или локальной инфраструктуры "конечного состояния" для запуска приложения. Затем он генерирует план для достижения этого конечного состояния и выполняет план по предоставлению инфраструктуры.
+[Terraform](https://www.terraform.io/) — это инструмент для создания декларативного кода, который позволяет разработчикам использовать язык высокого уровня, называемый HCL (HashiCorp Configuration Language) для описания нужной облачной или локальной инфраструктуры "конечного состояния" для запуска приложения. Затем он генерирует план для достижения этого конечного состояния и выполняет план по предоставлению инфраструктуры.
 https://cloud.yandex.ru/docs/solutions/infrastructure-management/terraform-quickstart
 https://gcorelabs.com/ru/blog/why-you-need-terraform/
 ```
@@ -39,19 +38,19 @@ $ binenv install terraform
 ```
 
 ## Установка Kubectl
-Kubectl — это инструмент командной строки для управления кластерами Kubernetes.
+[Kubectl](https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/) — это инструмент командной строки для управления кластерами Kubernetes.
 ```
 $ binenv install kubectl
 ```
 
 ## Установка Helm
-[Helm](url) — это диспетчер пакетов для Kubernetes, упрощающий для разработчиков и операторов упаковку, настройку и развертывание приложений и служб в кластерах Kubernetes.
+[Helm](https://helm.sh/) — это диспетчер пакетов для Kubernetes, упрощающий для разработчиков и операторов упаковку, настройку и развертывание приложений и служб в кластерах Kubernetes.
 ```
 $ binenv install helm
 ```
 
 ## Установка jq
-JQ - утилита для анализа, фильтрации, сравния и преобразовывания данных JSON.
+[JQ](https://stedolan.github.io/jq/) - утилита для анализа, фильтрации, сравния и преобразовывания данных JSON.
 
 ```
 $ sudo apt install jq
