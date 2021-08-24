@@ -80,6 +80,11 @@ $ vim terraform/private.auto.tfvars
 $ bash cluster_install.sh
 ```
 
+## Схема кластера Kubernetes
+2 ingress сделаны для отказоустойчивости
+
+![](https://habrastorage.org/webt/mp/ch/ew/mpchewezmqeuerdbdranur3f3z0.png)
+
 ## Рассмотрим k8s-cluster.tf в web интерфейсе Яндекс облака
 
 ```
