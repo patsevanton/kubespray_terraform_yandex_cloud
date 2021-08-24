@@ -26,8 +26,9 @@ https://stedolan.github.io/jq/
 
 ## Clone Kubespray repo and install Kubespray requirements
 ```
-$ git clone git@git.cloud-team.ru:ansible-roles/kubespray.git kubespray -b cloudteam
-$ sudo pip3 install -r kubespray/requirements.txt
+$ wget https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/v2.14.2.tar.gz
+$ tar -xvzf v2.14.2.tar.gz
+$ sudo pip3 install -r kubespray-2.14.2/requirements.txt
 ```
 
 ## Set Terraform variables
