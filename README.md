@@ -46,7 +46,7 @@ $ sudo apt install python3-pip git
 $ wget https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/v2.14.2.tar.gz
 $ tar -xvzf v2.14.2.tar.gz
 $ mv kubespray-2.14.2 kubespray
-$ sudo pip3 install -r kubespray-2.14.2/requirements.txt
+$ sudo pip3 install -r kubespray/requirements.txt
 ```
 
 ## Set Terraform variables
