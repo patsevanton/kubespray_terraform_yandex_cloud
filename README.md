@@ -24,6 +24,11 @@ https://helm.sh/docs/intro/install/
 
 https://stedolan.github.io/jq/
 
+## Install pip3 and git
+```
+$ sudo apt install python3-pip git
+```
+
 ## Clone Kubespray repo and install Kubespray requirements
 ```
 $ wget https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/v2.14.2.tar.gz
