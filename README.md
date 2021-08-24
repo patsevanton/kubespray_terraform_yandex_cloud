@@ -61,6 +61,7 @@ $ sudo pip3 install -r kubespray/requirements.txt
 ## Set Terraform variables
 ```
 $ cp terraform/private.auto.tfvars.example terraform/private.auto.tfvars
+$ yc config list
 $ vim terraform/private.auto.tfvars
 ```
 
