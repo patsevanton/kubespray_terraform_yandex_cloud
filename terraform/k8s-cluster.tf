@@ -116,7 +116,7 @@ resource "yandex_compute_instance_group" "k8s-masters" {
     resources {
       cores  = 2
       memory = 2
-      core_fraction = 20
+      core_fraction = 20 # Базовый уровень производительности vCPU. https://cloud.yandex.ru/docs/compute/concepts/performance-levels
     }
 
     # Загрузочный диск в виртуальных машинах в Instance Groups
@@ -135,6 +135,7 @@ resource "yandex_compute_instance_group" "k8s-masters" {
         yandex_vpc_subnet.k8s-subnet-2.id,
         yandex_vpc_subnet.k8s-subnet-3.id,
       ]
+      # Флаг nat true указывает что виртуалкам будет предоставлен публичный IP адрес.
       nat = true
     }
 
@@ -207,6 +208,7 @@ resource "yandex_compute_instance_group" "k8s-workers" {
         yandex_vpc_subnet.k8s-subnet-2.id,
         yandex_vpc_subnet.k8s-subnet-3.id,
       ]
+      # Флаг nat true указывает что виртуалкам будет предоставлен публичный IP адрес.
       nat = true
     }
 
@@ -283,6 +285,7 @@ resource "yandex_compute_instance_group" "k8s-ingresses" {
         yandex_vpc_subnet.k8s-subnet-2.id,
         yandex_vpc_subnet.k8s-subnet-3.id,
       ]
+      # Флаг nat true указывает что виртуалкам будет предоставлен публичный IP адрес.
       nat = true
     }
 
