@@ -105,17 +105,21 @@ resource "yandex_compute_instance_group" "k8s-masters" {
     yandex_vpc_subnet.k8s-subnet-2,
     yandex_vpc_subnet.k8s-subnet-3,
   ]
-
+  
+  # Шаблон экземпляра, к которому принадлежит группа экземпляров.
   instance_template {
 
+    # Имя виртуальных машин, создаваемых Instance Groups
     name = "master-{instance.index}"
 
+    # Ресурсы, которые будут выделены для создания виртуальных машин в Instance Groups
     resources {
       cores  = 2
       memory = 2
       core_fraction = 20
     }
 
+    # Загрузочный диск в виртуальных машинах в Instance Groups
     boot_disk {
       initialize_params {
         image_id = "fd8vmcue7aajpmeo39kk" # Ubuntu 20.04 LTS
