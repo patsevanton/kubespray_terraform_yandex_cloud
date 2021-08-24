@@ -94,15 +94,28 @@ resource "yandex_vpc_network" "k8s-network" {
   name = "k8s-network"
 }
 ```
-yandex_vpc_network — описание облачной сети.
+**yandex_vpc_network** — описание облачной сети.
 Облачная сеть — это аналог традиционной локальной сети в дата-центре. Облачные сети создаются в каталогах и используются для передачи информации между облачными ресурсами и связи ресурсов с интернетом.
-Ресурс yandex_vpc_network находится в разделе Virtual Private Cloud
+Ресурс **yandex_vpc_network** находится в разделе Virtual Private Cloud
 
 ![](https://habrastorage.org/webt/sm/kn/fy/smknfygungqfljeethka7jkwmlu.png)
 
-yandex_vpc_subnet — описание подсети, к которой будет подключена виртуальная машина.
+**yandex_vpc_subnet** — описание подсети, к которой будет подключена виртуальная машина.
 Подсеть — это диапазон IP-адресов в облачной сети. Адреса из этого диапазона могут назначаться облачным ресурсам — ВМ и кластерам баз данных. Подсети можно создавать только в том каталоге, которому принадлежит облачная сеть.
 Размер подсети задается по методу бесклассовой адресации (CIDR). В подсетях можно использовать только частные IPv4-адреса из диапазонов, определенных в RFC 1918
+
+```
+resource "yandex_vpc_subnet" "k8s-subnet-1" {
+  name           = "k8s-subnet-1"
+  zone           = "ru-central1-a"
+  network_id     = yandex_vpc_network.k8s-network.id
+  v4_cidr_blocks = ["192.168.10.0/24"]
+  depends_on = [
+    yandex_vpc_network.k8s-network,
+  ]
+}
+```
+В этом блоке создается ресурс **yandex_vpc_subnet** с именем **k8s-subnet-1** в зоне доступности **ru-central1-a**, у которого сеть  **v4_cidr_blocks** будет **192.168.10.0/24**.
 
 Ресурс "yandex_vpc_subnet" "k8s-subnet-1" находится в разделе Virtual Private Cloud в разделе k8s-network
 
