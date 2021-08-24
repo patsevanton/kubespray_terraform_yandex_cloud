@@ -57,7 +57,8 @@ $ sudo apt install jq
 $ sudo apt install python3-pip git
 ```
 
-## Скачаем Kubespray версии 2.14.2 и установим зависимости для Kubespray 
+## Скачаем Kubespray версии 2.14.2 и установим зависимости для Kubespray
+Выбираем версию 2.14.2, так как на момент создания оригинального репозитория была версия 2.14.2
 ```
 $ wget https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/v2.14.2.tar.gz
 $ tar -xvzf v2.14.2.tar.gz
