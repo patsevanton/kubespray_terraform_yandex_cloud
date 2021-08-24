@@ -4,9 +4,15 @@
 
 https://cloud.yandex.ru
 
+## Install binenv
+
+https://github.com/devops-works/binenv
+
 ## Install Terraform client 
 
-https://learn.hashicorp.com/terraform/getting-started/install
+```
+$ binenv install terraform
+```
 
 ## Install Ansible
 
@@ -14,15 +20,21 @@ https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.ht
 
 ## Install Kubectl
 
-https://kubernetes.io/docs/tasks/tools/install-kubectl/
+```
+$ binenv install kubectl
+```
 
 ## Install Helm
 
-https://helm.sh/docs/intro/install/
+```
+$ binenv install helm
+```
 
 ## Install jq (small CLI utility for JSON parsing)
 
-https://stedolan.github.io/jq/
+```
+$ sudo apt install jq
+```
 
 ## Install pip3 and git
 ```
