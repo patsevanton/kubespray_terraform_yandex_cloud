@@ -65,6 +65,8 @@ $ yc config list
 $ vim terraform/private.auto.tfvars
 ```
 
+## Put ssh key into .ssh
+
 ## Create cloud resources and install k8s cluster
 ```
 $ bash cluster_install.sh
