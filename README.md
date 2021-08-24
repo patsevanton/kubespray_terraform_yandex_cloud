@@ -75,7 +75,7 @@ resource "yandex_vpc_network" "k8s-network" {
 
 Ресурс "yandex_vpc_subnet" "k8s-subnet-1" находится в разделе Virtual Private Cloud в разделе k8s-network
 
-![image-20210824161620960](C:\Users\Anton_Patsev\AppData\Roaming\Typora\typora-user-images\image-20210824161620960.png)
+![](https://habrastorage.org/webt/9i/e0/cg/9ie0cgb2f_dtufwygc_2geqcatk.png)
 
 Ресурс "yandex_iam_service_account" находится в каталоге, где вы создаете инфраструктуру в разделе Сервисные аккаунты. 
 
