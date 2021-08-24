@@ -11,9 +11,9 @@ bash generate_etc_hosts.sh > ../kubespray_inventory/etc-hosts
 
 cd ../
 rm -rf kubespray/inventory/mycluster
-cp -rfp kubespray_inventory kubespray/inventory/mycluster
+cp -rfp kubespray_inventory kubespray-2.14.2/inventory/mycluster
 
-cd kubespray
+cd kubespray-2.14.2
 ansible-playbook -i inventory/mycluster/hosts.ini --become cluster.yml
 
 cd ../terraform
