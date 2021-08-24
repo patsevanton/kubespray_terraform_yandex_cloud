@@ -4,6 +4,11 @@
 
 https://cloud.yandex.ru
 
+## Install Yandex.Cloud (CLI) 
+```
+$ curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+```
+
 ## Install binenv
 
 https://github.com/devops-works/binenv
