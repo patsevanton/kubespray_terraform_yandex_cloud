@@ -1,52 +1,60 @@
-# Install k8s cluster with Kubespray on Yandex Cloud
+# Установка Kubernetes кластера с помощью Kubespray в Yandex Cloud
 
-## Register in Yandex Cloud
+Yandex.Cloud - облачная платформа, где каждый может создавать и совершенствовать свои цифровые сервисы, используя инфраструктуру и уникальные технологии Яндекса.
 
-https://cloud.yandex.ru
+Kubespray — это набор Ansible ролей для установки и конфигурации системы оркестрации контейнерами Kubernetes.
 
-## Install Yandex.Cloud (CLI) 
+Kubernetes (K8s) - это открытое программное обеспечение для автоматизации развёртывания, масштабирования и управления контейнеризированными приложениями.
+
+## Регистрация на Yandex Cloud
+
+https://cloud.yandex.ru/docs/billing/quickstart/
+
+## Установка Yandex.Cloud (CLI) 
+Интерфейс командной строки Yandex.Cloud (CLI) — скачиваемое программное обеспечение для управления вашими облачными ресурсами через командную строку.
 ```
 $ curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 ```
 
-## Create profile Yandex Cloud
+## Создание профиля Yandex Cloud
 
 https://cloud.yandex.ru/docs/cli/quickstart
 
-## Install binenv
+## Установка binenv
 
 https://github.com/devops-works/binenv
 
-## Install Terraform client 
+## Установка Terraform client 
 
 ```
 $ binenv install terraform
 ```
 
-## Install Kubectl
+## Установка Kubectl
 
 ```
 $ binenv install kubectl
 ```
 
-## Install Helm
+## Установка Helm
 
 ```
 $ binenv install helm
 ```
 
-## Install jq (small CLI utility for JSON parsing)
+## Установка jq
+JQ - утилита для анализа, фильтрации, сравния и преобразовывания данных JSON.
 
 ```
 $ sudo apt install jq
 ```
 
-## Install pip3 and git
+## Установка pip3 и git
 ```
 $ sudo apt install python3-pip git
 ```
 
-## Clone Kubespray repo and install Kubespray requirements
+## Скачаем Kubespray версии 2.14.2 и установим зависимости для Kubespray 
 ```
 $ wget https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/v2.14.2.tar.gz
 $ tar -xvzf v2.14.2.tar.gz
@@ -54,16 +62,16 @@ $ mv kubespray-2.14.2 kubespray
 $ sudo pip3 install -r kubespray/requirements.txt
 ```
 
-## Set Terraform variables
+## Настроим Terraform переменные для доступа к Yandex Cloud
 ```
 $ cp terraform/private.auto.tfvars.example terraform/private.auto.tfvars
 $ yc config list
 $ vim terraform/private.auto.tfvars
 ```
 
-## Put ssh key into .ssh
+## Поместим ssh ключи в директорию .ssh
 
-## Create cloud resources and install k8s cluster
+## Создание ресурсов в Yandex Cloud и установка Kubernetes кластера с помощью Kubespray
 ```
 $ bash cluster_install.sh
 ```
@@ -97,30 +105,30 @@ resource "yandex_vpc_network" "k8s-network" {
 ![](https://habrastorage.org/webt/gd/kd/ss/gdkdssznvixut8dr8wgftwjej4k.png)
 
 
-## Copy generated config
+## Копирование конфига kubernetes
 ```
 $ mkdir -p ~/.kube && cp kubespray/inventory/mycluster/artifacts/admin.conf ~/.kube/config
 ```
 
-## Deploy test app
+## Разворачивание тестового приложения
 ```
 $ kubectl apply -f manifests/test-app.yml
 ```
 
-## Add hosts to your local hosts file
+## Добавление в файл hosts информации о названии и IP адресах наших серверов
 ```
 $ sudo sh -c "cat kubespray_inventory/etc-hosts >> /etc/hosts"
 ```
 
-## Check external access to test app
+## Проверка внешнего доступа тестового приложения
 ```
 $ curl hello.local
 Hello from my-deployment-784598767c-7gjjs
 ```
 
-# Cluster monitoring
+# Мониторинг кластера Kubernetes
 
-## Install Kubernetes Dashboard
+## Установка Kubernetes Dashboard
 ```
 $ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 $ helm install --namespace monitoring --create-namespace -f manifests/dashboard-values.yml \
@@ -133,7 +141,7 @@ $ kubectl port-forward -n monitoring $(kubectl get pods -n monitoring \
 ```
 Go to http://localhost:9090 and use token for authentication
 
-## Install Prometheus and Grafana
+## Установка Prometheus и Grafana
 ```
 $ helm install --namespace monitoring --create-namespace -f manifests/prometheus-values.yml \
   prometheus stable/prometheus
@@ -141,13 +149,13 @@ $ helm install --namespace monitoring --create-namespace -f manifests/grafana-va
   grafana stable/grafana
 ```
 
-### Access Prometheus UI
+### Доступ к Prometheus UI
 
 Go to http://prometheus.local
 
 ![](https://habrastorage.org/webt/gn/ux/xg/gnuxxggcfq2k8czx0mtpbzmvs7o.png)
 
-### Access Grafana UI
+### Доступ к Grafana UI
 ```
 $ kubectl get secret -n monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
@@ -158,9 +166,10 @@ Import a new dashboard to Grafana (grafana.com dashboard: https://grafana.com/da
 
 ![](https://habrastorage.org/webt/xs/r4/wr/xsr4wrgueg7hqsi0paopmeqcdk8.png)
 
-# Logging
+# Логирование
 
-## Deploy Loghouse
+## Развертывание Loghouse
+Loghouse — Open Source-система для работы с логами в Kubernetes
 ```
 $ helm repo add loghouse https://flant.github.io/loghouse/charts/
 $ helm install --namespace loghouse --create-namespace -f manifests/loghouse-values.yml \
@@ -175,13 +184,14 @@ Try to search logs of test app with the query:
 ~app = "my-app"
 ```
 
-# Cluster backup/restore
+# Бекапирование/восстановление кластера kubernetes
 
-## Install Velero
+## Установка Velero
+Velero - это удобный инструмент резервного копирования для kubernetes, который сжимает и бэкапит объекты kubernetes в объектное хранилище.
 
 https://velero.io/docs/v1.4/basic-install/
 
-## Install and configure AWS plugin
+## Установка и конфигурирование AWS plugin для Velero
 ```
 $ velero install \
   --provider aws \
@@ -192,26 +202,25 @@ $ velero install \
   --secret-file kubespray_inventory/credentials-velero
 ```
 
-## Create backup and watch its status
+## Создание бекапа backup и просмотр его статуса
 ```
 $ velero backup create my-first-backup
 $ velero backup get
 ```
 
-## Delete test app
+## Удаление тестового приложения
 ```
 $ kubectl delete -f manifests/test-app.yml
 ```
 
-## Restore backup and list restores
+## Восстановление бекапа и просмотр списка восстановленных бекапов
 ```
 $ velero restore create --from-backup my-first-backup
 $ velero restore get
 ```
 
-# Destroy cluster
+# Удаление кластера kubernetes и ресурсов в Yandex Cloud
 
-## Delete cloud resources
 ```
 $ bash cluster_destroy.sh
 ```
