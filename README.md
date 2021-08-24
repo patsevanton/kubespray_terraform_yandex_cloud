@@ -1,4 +1,4 @@
-# Установка Kubernetes кластера с помощью Kubespray в Yandex Cloud
+# Автоматизация установки Kubernetes кластера с помощью Kubespray и Terraform в Yandex Cloud
 
 Инструкция была основана на базе видео "Установка кластера Kubernetes с помощью Kubespray" в Youtube.
 Весь код был форкнут из репозитория https://git.cloud-team.ru/lections/kubernetes_setup
