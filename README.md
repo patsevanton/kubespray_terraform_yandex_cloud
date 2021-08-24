@@ -81,7 +81,7 @@ $ bash cluster_install.sh
 ```
 
 ## Схема кластера Kubernetes
-2 ingress сделаны для отказоустойчивости
+2 ingress и 2 worker сделаны для отказоустойчивости и для непрерывного обновления серверов.
 
 ![](https://habrastorage.org/webt/mp/ch/ew/mpchewezmqeuerdbdranur3f3z0.png)
 
