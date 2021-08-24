@@ -61,6 +61,13 @@ $ yc config list
 $ vim terraform/private.auto.tfvars
 ```
 
+## Put ssh key into .ssh
+
+## Create cloud resources and install k8s cluster
+```
+$ bash cluster_install.sh
+```
+
 ## Рассмотрим k8s-cluster.tf в web интерфейсе Яндекс облака
 
 ```
@@ -89,12 +96,6 @@ resource "yandex_vpc_network" "k8s-network" {
 
 ![](https://habrastorage.org/webt/gd/kd/ss/gdkdssznvixut8dr8wgftwjej4k.png)
 
-## Put ssh key into .ssh
-
-## Create cloud resources and install k8s cluster
-```
-$ bash cluster_install.sh
-```
 
 ## Copy generated config
 ```
