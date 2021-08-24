@@ -34,7 +34,7 @@ done
 printf "\n[all:vars]\n"
 printf "ansible_user=ubuntu\n"
 printf "supplementary_addresses_in_ssl_keys='"
-terraform output -json instance_group_masters_public_ips | jq -cj
+terraform output -json instance_group_masters_public_ips | jq -cj '.'
 printf "'\n\n"
 
 cat << EOF
