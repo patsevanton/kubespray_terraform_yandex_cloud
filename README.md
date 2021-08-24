@@ -21,23 +21,23 @@ $ curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 https://cloud.yandex.ru/docs/cli/quickstart
 
 ## Установка binenv
-
+Binenv - утилита загрузки, установки и управления бинарными программами, которые вам нужны в повседневной жизни DevOps (например, kubectl, helm, ...).
 https://github.com/devops-works/binenv
 
-## Установка Terraform client 
-
+## Установка Terraform 
+Terraform — это инструмент для создания декларативного кода, который позволяет разработчикам использовать язык высокого уровня, называемый HCL (HashiCorp Configuration Language) для описания нужной облачной или локальной инфраструктуры "конечного состояния" для запуска приложения. Затем он генерирует план для достижения этого конечного состояния и выполняет план по предоставлению инфраструктуры.
 ```
 $ binenv install terraform
 ```
 
 ## Установка Kubectl
-
+Kubectl — это инструмент командной строки для управления кластерами Kubernetes.
 ```
 $ binenv install kubectl
 ```
 
 ## Установка Helm
-
+Helm — это диспетчер пакетов для Kubernetes, упрощающий для разработчиков и операторов упаковку, настройку и развертывание приложений и служб в кластерах Kubernetes.
 ```
 $ binenv install helm
 ```
