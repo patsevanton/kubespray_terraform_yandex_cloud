@@ -9,6 +9,10 @@ https://cloud.yandex.ru
 $ curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 ```
 
+## Create profile Yandex Cloud
+
+https://cloud.yandex.ru/docs/cli/quickstart
+
 ## Install binenv
 
 https://github.com/devops-works/binenv
