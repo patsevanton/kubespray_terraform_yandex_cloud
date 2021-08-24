@@ -1,0 +1,7 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: wait until server is up
+      wait_for_connection:
+        delay: 60
+        timeout: 900
