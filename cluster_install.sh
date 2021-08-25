@@ -11,6 +11,7 @@ bash generate_etc_hosts.sh > ../kubespray_inventory/etc-hosts
 
 cd ../
 rm -rf kubespray/inventory/mycluster
+mkdir -p kubespray/inventory
 cp -rfp kubespray_inventory kubespray/inventory/mycluster
 
 export ANSIBLE_HOST_KEY_CHECKING=False
