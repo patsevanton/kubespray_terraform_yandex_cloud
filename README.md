@@ -4,7 +4,7 @@
 
 Код был форкнут из репозитория https://git.cloud-team.ru/lections/kubernetes_setup и добавлен с патчами в репозиторий https://github.com/patsevanton/kubespray_terraform_yandex_cloud
 
-В основном утилиты и подходы знают большинство devops специалистов/инженеров. Из интересного [скрипт](https://git.cloud-team.ru/lections/kubernetes_setup/blob/master/terraform/generate_inventory.sh) для создания ansible inventory файла из terraform структур.
+Самое интересное в этом посте это [скрипт](https://git.cloud-team.ru/lections/kubernetes_setup/blob/master/terraform/generate_inventory.sh) для создания ansible inventory файла из terraform структур.
 
 [Yandex.Cloud](url) - облачная платформа, где каждый может создавать и совершенствовать свои цифровые сервисы, используя инфраструктуру и уникальные технологии Яндекса.
 
